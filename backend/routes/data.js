@@ -17,8 +17,18 @@ const userdb = new Client({
   password: 'bhawnaNautiyal@1',
   port: 5432,
 });
+const userdb2 = new Client({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'HackMate',
+  password: 'igdtuw@123',
+  port: 5432,
+});
 
 userdb.connect()
+  .then(() => console.log('Connected to the database'))
+  .catch(err => console.error('Database connection error:', err.stack));
+userdb2.connect()
   .then(() => console.log('Connected to the database'))
   .catch(err => console.error('Database connection error:', err.stack));
 
