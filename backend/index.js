@@ -70,36 +70,7 @@ app.get('/userCard', async (req, res) => {
   }
 });
 
-app.post('/login', async (req, res) => {
-  const { name, password } = req.body;
-  console.log('Login request:', { name, password });
-  try {
-    // Use parameterized query to prevent SQL injection
-    const result = await userdb.query(
-      'SELECT * FROM users WHERE name = $1 AND password_hash = $2',
-      [name, password]
-    );
-    console.log('Query result:', result.rows);
 
-    if (result.rows.length > 0) {
-      // User exists
-      res.json({
-        success: true,
-        message: 'User authenticated',
-        user: { name: result.rows[0].name }
-      });
-    } else {
-      // No match found
-      res.status(401).json({
-        success: false,
-        message: 'Invalid credentials'
-      });
-    }
-  } catch (error) {
-    console.error('Login error:', error);
-    res.status(500).json({ success: false, message: 'Server error' });
-  }
-});
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
