@@ -1,36 +1,47 @@
 import React, { useEffect, useState } from 'react';
+import TinderCard from './components/TinderCard';
+import './App.css';
 import axios from 'axios';
-import LoginPage from './authentication/LoginPage';
-// we can use this App component to render the LoginPage and manage user data
 
 function App() {
+  const [userCards, setUserCards] = useState([]);
   const [users, setUsers] = useState([]);
 
-  // Fetch users from backend
   const fetchUsers = async () => {
+    console.log("Fetching data...");
     try {
-      const response = await axios.get('http://localhost:3000/users');
-      setUsers(response.data);
-      console.log('Users fetched:', response.data);
-      
+      const res = await axios.get('http://localhost:3000/userCard');
+      console.log('User Cards:', res.data);
+      setUserCards(res.data);
     } catch (error) {
-      console.error('Error fetching users:', error);
+      console.error('Error fetching data:', error);
     }
   };
-
 
   useEffect(() => {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+    console.log('userCards state:', userCards);
+  }, [userCards]);
+
+  const handleSwipe = (direction, id) => {
+    console.log(`Swiped ${direction} on card with id: ${id}`);
+    // You can add logic here to remove the card, update state, etc.
+  };
+
   return (
-    <div>
-      <h1>Users</h1>
-      <button onClick={fetchUsers}>Update DB</button>
-      {/* database : users  */}
-      <LoginPage />
-      
-      
+    <div className="app">
+      <div className="card-container">
+        {userCards.length > 0 ? (
+          userCards.map((card) => (
+            <TinderCard key={card.id} card={card} onSwipe={handleSwipe} />
+          ))
+        ) : (
+          <p>No user cards available</p>
+        )}
+      </div>
     </div>
   );
 }
