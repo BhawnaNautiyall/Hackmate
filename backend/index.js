@@ -12,6 +12,9 @@ app.use(cors());
 app.use(urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+
 // const userdb = new Client({
 //   user: 'postgres',
 //   host: 'localhost',
@@ -28,6 +31,7 @@ const userdb2 = new Client({
   port: 5432,
 });
 
+
 // userdb.connect()
 //   .then(() => console.log('Connected to the database'))
 //   .catch(err => console.error('Database connection error:', err.stack));
@@ -35,6 +39,7 @@ const userdb2 = new Client({
 // app.get('/', (req, res) => {
 //   res.send('Hello World!');
 // });
+
 
 // app.get('/users', async (req, res) => {
 //   try {
