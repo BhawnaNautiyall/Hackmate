@@ -2,7 +2,6 @@ import express from 'express';
 const app = express();
 import {dataRoutes} from './routes/data.js';
 
-
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 
