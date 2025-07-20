@@ -27,6 +27,7 @@ router.get('/posts', async (req, res) => {
   try {
     const result = await postdb.query('SELECT * FROM posts');
     res.json(result.rows); 
+    console.log('Posts fetched successfully:', result.rows);
   } catch (err) {
     console.error('Error fetching users:', err);
     res.status(500).json({ error: 'Internal Server Error' }); 
