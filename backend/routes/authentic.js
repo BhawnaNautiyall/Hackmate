@@ -14,15 +14,13 @@ const userdb = new Client({
   user: 'postgres',
   host: 'localhost',
   database: 'HackMate',
-  password: 'bhawnaNautiyal@1',
+  password: 'igdtuw@123', // Updated to match the working connection
   port: 5432,
 });
 
 userdb.connect()
   .then(() => console.log('Connected to the database'))
   .catch(err => console.error('Database connection error:', err.stack));
-
-
 
 router.post('/login', async (req, res) => {
   const { name, password } = req.body;
@@ -40,7 +38,12 @@ router.post('/login', async (req, res) => {
       res.json({
         success: true,
         message: 'User authenticated',
-        user: { name: result.rows[0].name }
+        user: { 
+          name: result.rows[0].name,
+          email: result.rows[0].email,
+          branch: result.rows[0].branch,
+          year: result.rows[0].year
+        }
       });
     } else {
       // No match found

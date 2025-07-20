@@ -2,6 +2,7 @@ import express from 'express';
 import { Client } from 'pg';  
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import { authenticRoutes } from './routes/authentic.js';
 
 const { urlencoded } = bodyParser;
 
@@ -70,7 +71,8 @@ app.get('/userCard', async (req, res) => {
   }
 });
 
-
+// Add authentication routes
+app.use('/api', authenticRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
