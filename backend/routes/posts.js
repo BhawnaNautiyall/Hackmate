@@ -10,7 +10,7 @@ router.use(urlencoded({ extended: true }));
 import cors from 'cors';
 router.use(cors());
 
-const userdb = new Client({
+const postdb = new Client({
   user: 'postgres',
   host: 'localhost',
   database: 'HackMate',
@@ -18,25 +18,19 @@ const userdb = new Client({
   port: 5432,
 });
 
-userdb.connect()
+postdb.connect()
   .then(() => console.log('Connected to the database'))
   .catch(err => console.error('Database connection error:', err.stack));
 
 
-
-router.get('/users', async (req, res) => {
+router.get('/posts', async (req, res) => {
   try {
-    const result = await userdb.query('SELECT * FROM users');
-    res.json(result.rows); // ✅ only send this once
+    const result = await postdb.query('SELECT * FROM posts');
+    res.json(result.rows); 
   } catch (err) {
     console.error('Error fetching users:', err);
-    res.status(500).json({ error: 'Internal Server Error' }); // ✅ only this
+    res.status(500).json({ error: 'Internal Server Error' }); 
   }
 });
 
-
-
-
-
-
-export const dataRoutes=router;
+export const postsRoutes = router;
